@@ -1,4 +1,6 @@
 #coding=utf-8
+#author=xiang_xiao
+
 from flask import Flask,request
 import logging
 import time
@@ -8,7 +10,7 @@ from DBUtils.PooledDB import PooledDB
 
 
 
-#日志
+#log
 logging.basicConfig(level=logging.NOTSET,
                 format='%(asctime)s %(filename)s[line:%(lineno)d] %(levelname)s %(message)s',
                 datefmt='%a, %d %b %Y %H:%M:%S',
@@ -22,7 +24,7 @@ formatter = logging.Formatter('%(name)-12s: %(levelname)-8s %(message)s')
 console.setFormatter(formatter)
 logging.getLogger('').addHandler(console)
 
-## database config
+# database config
 
 class Config(object) :
     DBHOST = 'localhost'
@@ -36,8 +38,6 @@ class Config(object) :
 
 
 app = Flask(__name__)
-#app.config.from_object('config')
-
 
 @app.route('/r',methods=['POST'])
 def record():
@@ -51,8 +51,14 @@ def record():
         user_phone = request.form['user_phone']
         logging.info("accept the request with params: ip: "+ip+" choices: "+choices+" user_type :"+user_type+" user_interest :"+user_interest+" user_name :"+user_name+" user_email :"+user_email+" user_phone :"+user_phone)
         db = Mysql()
-        db.insert_record(ip,choices,user_type,user_interest,user_name,user_email,user_phone)
-        return "{success: true}"
+        # the insert sql
+        sql = 'insert into records(ip,choices,user_type,user_interest,user_name,user_email,user_phone,insert_time) values (%s,%s,%s,%s,%s,%s,%s,now())'
+        # the insert value tuple
+        values = [ip, choices, user_type, user_interest, user_name, user_email, user_phone]
+        if db.insert_one(sql,values):
+            return "{success: true}"
+        else:
+            return "{success: false}"
 
     except StandardError, e:
         logging.error(e.name)
@@ -64,15 +70,15 @@ def record():
 
 class Mysql(object):
     """
-        MYSQL数据库对象，负责产生数据库连接 , 此类中的连接采用连接池实现
-        获取连接对象：conn = Mysql.getConn()
-        释放连接对象;conn.close()或del conn
+        MYSQL database pooled object;
+        to get the connection: conn = Mysql.__getConn()
+        to release the connection: conn.close()
     """
     #连接池对象
     __pool = None
     def __init__(self):
         """
-        数据库构造函数，从连接池中取出连接，并生成操作游标
+        constructor，initial the connection the cursor
         """
 #        self._conn = MySQLdb.connect(host=Config.DBHOST , port=Config.DBPORT , user=Config.DBUSER , passwd=Config.DBPWD ,
 #                              db=Config.DBNAME,use_unicode=False,charset=Config.DBCHAR,cursorclass=DictCursor)
@@ -82,8 +88,8 @@ class Mysql(object):
     @staticmethod
     def __getConn():
         """
-        @summary: 静态方法，从连接池中取出连接
-        @return MySQLdb.connection
+        :summary: static methods, get connection from the pool
+        :return: MySQLdb.connection
         """
         if Mysql.__pool is None:
             __pool = PooledDB(creator=MySQLdb, mincached=1, maxcached=20,
@@ -91,12 +97,21 @@ class Mysql(object):
                               db=Config.DBNAME, use_unicode=False, charset=Config.DBCHAR, cursorclass=DictCursor)
         return __pool.connection()
 
-    def insert_record(self,ip,choices,user_type,user_interest,user_name,user_email,user_phone):
-        sql = 'insert into records(ip,choices,user_type,user_interest,user_name,user_email,user_phone,insert_time) values (%s,%s,%s,%s,%s,%s,%s,now())'
-        values = [ip,choices,user_type,user_interest,user_name,user_email,user_phone]
-        self._cursor.execute(sql,values)
-        self._conn.commit()
-        return
+    def insert_one(self,sql,values):
+        """
+        methods for insert one record
+        :param sql:
+        :param values:
+        :return:
+        """
+        try:
+            self._cursor.execute(sql,values)
+            self._conn.commit()
+            return True
+        except StandardError, e:
+            raise e
+            return False
+
 
 if __name__ == '__main__':
     app.run(port=23333,debug=True,threaded=True)

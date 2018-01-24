@@ -1,0 +1,13 @@
+Wed, 24 Jan 2018 21:05:54 _internal.py[line:87] WARNING  * Debugger is active!
+Wed, 24 Jan 2018 21:05:54 _internal.py[line:87] INFO  * Debugger PIN: 199-009-595
+Wed, 24 Jan 2018 21:10:04 _internal.py[line:87] INFO  * Detected change in '/Users/xiangxiao/PycharmProjects/ayana_backend/api.py', reloading
+Wed, 24 Jan 2018 21:10:05 _internal.py[line:87] WARNING  * Debugger is active!
+Wed, 24 Jan 2018 21:10:05 _internal.py[line:87] INFO  * Debugger PIN: 199-009-595
+Wed, 24 Jan 2018 21:10:08 api.py[line:52] INFO accept the request with params: ip: 127.0.0.1 choices: 01 user_type :A user_interest :travel user_name :sandy user_email :abc@abc user_phone :111110
+Wed, 24 Jan 2018 21:10:08 _internal.py[line:87] INFO 127.0.0.1 - - [24/Jan/2018 21:10:08] "POST /r HTTP/1.1" 200 -
+Wed, 24 Jan 2018 21:13:25 _internal.py[line:87] INFO  * Detected change in '/Users/xiangxiao/PycharmProjects/ayana_backend/api.py', reloading
+Wed, 24 Jan 2018 21:13:27 _internal.py[line:87] WARNING  * Debugger is active!
+Wed, 24 Jan 2018 21:13:27 _internal.py[line:87] INFO  * Debugger PIN: 199-009-595
+Wed, 24 Jan 2018 21:14:55 _internal.py[line:87] INFO  * Detected change in '/Users/xiangxiao/PycharmProjects/ayana_backend/api.py', reloading
+Wed, 24 Jan 2018 21:14:57 _internal.py[line:87] WARNING  * Debugger is active!
+Wed, 24 Jan 2018 21:14:57 _internal.py[line:87] INFO  * Debugger PIN: 199-009-595
