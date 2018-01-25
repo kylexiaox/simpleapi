@@ -1,4 +1,6 @@
 # simpleapi
 install the independency
 
-pip install flask,DBUtils,logging,mysql
+python requirement：python 2.6
+
+command: pip install flask,DBUtils,logging,mysql
