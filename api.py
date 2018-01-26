@@ -115,6 +115,6 @@ class Mysql(object):
 if __name__ == '__main__':
     app.run(
         host='0.0.0.0',
-        port=23333,
+        port=23334,
         debug=True,
         threaded=True)
