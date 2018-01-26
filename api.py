@@ -42,7 +42,7 @@ app = Flask(__name__)
 @app.route('/r',methods=['POST'])
 def record():
     try:
-        ip = request.remote_addr
+        ip = request.headers['X-Forwarded-For']
         choices = request.form['choices']
         user_type = request.form['user_type']
         user_interest = request.form['user_interest']
@@ -74,7 +74,6 @@ class Mysql(object):
         to get the connection: conn = Mysql.__getConn()
         to release the connection: conn.close()
     """
-    #连接池对象
     __pool = None
     def __init__(self):
         """
@@ -114,4 +113,8 @@ class Mysql(object):
 
 
 if __name__ == '__main__':
-    app.run(port=23333,debug=True,threaded=True)
+    app.run(
+        host='0.0.0.0',
+        port=23333,
+        debug=True,
+        threaded=True)
