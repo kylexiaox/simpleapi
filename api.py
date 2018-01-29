@@ -61,8 +61,8 @@ def record():
         else:
             return "{success: false}"
     except StandardError, e:
-        logging.error(e.name)
-        return "{success: false; error_message:"+e.name+"}"
+        logging.error(e.args)
+        return "{success: false; error_message:"+e.args+"}"
 
 
 @app.route('/log',methods=['GET'])
