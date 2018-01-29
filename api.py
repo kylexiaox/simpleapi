@@ -75,7 +75,7 @@ def log():
     else:
         return "{success: false}"
 
-@app.route('/pullfromgithub',methods='POST')
+@app.route('/pullfromgithub',methods=['POST'])
 def pull():
     cmd = subprocess.Popen("git pull", shell=True, cwd='/data/freelancing-ayana/',)
     if cmd.wait() == 0:
