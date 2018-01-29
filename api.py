@@ -40,7 +40,7 @@ class Config(object) :
 
 app = Flask(__name__)
 
-db = Mysql()
+
 
 @app.route('/r',methods=['POST'])
 def record():
@@ -70,14 +70,14 @@ def record():
     except StandardError, e:
         logging.error(e.name)
         return "{success: false; error_message:"+e.name+"}"
-    
+
 
 @app.route('/log',methods=['GET'])
 def log():
     ip = request.headers['X-Forwarded-For']
     sql = "insert into logs(ip,insert_time) values (%s,now())"
     values = [ip]
-    if db.insert_one(sql,value):
+    if db.insert_one(sql,values):
         return "{success: true}"
     else:
         return "{success: false}"
@@ -129,6 +129,7 @@ class Mysql(object):
             raise e
             return False
 
+db = Mysql()
 
 if __name__ == '__main__':
     app.run(
