@@ -13,11 +13,7 @@ from flask import Flask,request
 import urllib2
 import logging
 import time
-import MySQLdb
-from MySQLdb.cursors import DictCursor
-from DBUtils.PooledDB import PooledDB
-
-
+from Mysql import Mysql
 
 #log
 logging.basicConfig(level=logging.NOTSET,
@@ -78,11 +74,6 @@ def log():
         return "{success: true}"
     else:
         return "{success: false}"
-
-
-
-
-
 
 
 
