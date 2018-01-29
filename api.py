@@ -44,7 +44,8 @@ def record():
         urlobject = urllib2.urlopen(url)
         urlcontent = urlobject.read()
         res = json.loads(urlcontent)
-        city = res['data']['city']
+        city = res['data']
+        print city
         choices = request.form['choices']
         user_type = request.form['user_type']
         user_interest = request.form['user_interest']
