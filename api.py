@@ -2,6 +2,7 @@
 #author=xiang_xiao
 
 from flask import Flask,request
+import urllib2
 import logging
 import time
 import MySQLdb
@@ -39,10 +40,18 @@ class Config(object) :
 
 app = Flask(__name__)
 
+db = Mysql()
+
 @app.route('/r',methods=['POST'])
 def record():
     try:
         ip = request.headers['X-Forwarded-For']
+        url = 'http://ip.taobao.com/service/getIpInfo.php?ip=%s' % (ip)
+        print url
+        urlobject = urllib2.urlopen(url)
+        urlcontent = urlobject.read()
+        res = json.loads(urlcontent)
+        city = res['data']['city']
         choices = request.form['choices']
         user_type = request.form['user_type']
         user_interest = request.form['user_interest']
@@ -50,19 +59,28 @@ def record():
         user_email = request.form['user_email']
         user_phone = request.form['user_phone']
         logging.info("accept the request with params: ip: "+ip+" choices: "+choices+" user_type :"+user_type+" user_interest :"+user_interest+" user_name :"+user_name+" user_email :"+user_email+" user_phone :"+user_phone)
-        db = Mysql()
         # the insert sql
-        sql = 'insert into records(ip,choices,user_type,user_interest,user_name,user_email,user_phone,insert_time) values (%s,%s,%s,%s,%s,%s,%s,now())'
+        sql = 'insert into records(ip,choices,user_type,user_interest,user_name,user_email,user_phone,city,insert_time) values (%s,%s,%s,%s,%s,%s,%s,%s,now())'
         # the insert value tuple
         values = [ip, choices, user_type, user_interest, user_name, user_email, user_phone]
         if db.insert_one(sql,values):
             return "{success: true}"
         else:
             return "{success: false}"
-
     except StandardError, e:
         logging.error(e.name)
         return "{success: false; error_message:"+e.name+"}"
+    
+
+@app.route('/log',methods=['GET'])
+def log():
+    ip = request.headers['X-Forwarded-For']
+    sql = "insert into logs(ip,insert_time) values (%s,now())"
+    values = [ip]
+    if db.insert_one(sql,value):
+        return "{success: true}"
+    else:
+        return "{success: false}"
 
 
 
