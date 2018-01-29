@@ -40,12 +40,10 @@ def record():
     try:
         ip = request.headers['X-Forwarded-For']
         url = 'http://ip.taobao.com/service/getIpInfo.php?ip=%s' % (ip)
-        print url
         urlobject = urllib2.urlopen(url)
         urlcontent = urlobject.read()
         res = json.loads(urlcontent)
-        city = res['data']
-        print city
+        city = res['data']['city']
         choices = request.form['choices']
         user_type = request.form['user_type']
         user_interest = request.form['user_interest']
@@ -55,7 +53,7 @@ def record():
         channel = request.form['channel']
         logging.info("accept the request with params: ip: "+ip+" choices: "+choices+" user_type :"+user_type+" user_interest :"+user_interest+" user_name :"+user_name+" user_email :"+user_email+" user_phone :"+user_phone+" channel :"+channel)
         # the insert sql
-        sql = 'insert into records(ip,choices,user_type,user_interest,user_name,user_email,user_phone,city,channel,insert_time) values (%s,%s,%s,%s,%s,%s,%s,%s,now())'
+        sql = 'insert into records(ip,choices,user_type,user_interest,user_name,user_email,user_phone,city,channel,insert_time) values (%s,%s,%s,%s,%s,%s,%s,%s,%s,now())'
         # the insert value tuple
         values = [ip, choices, user_type, user_interest, user_name, user_email, user_phone,city,channel]
         if db.insert_one(sql,values):
@@ -83,5 +81,5 @@ if __name__ == '__main__':
     app.run(
         host='0.0.0.0',
         port=23334,
-        debug=True,
+        debug=False,
         threaded=True)
