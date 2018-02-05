@@ -76,6 +76,14 @@ def log():
     else:
         return "{success: false}"
 
+@app.route('/statisticforanyana',methods=['GET'])
+def statistic():
+    sql = "select * from records"
+    result = db.query_all(sql)
+    data = result[0]
+    count = result[1]
+    return render_template("index.html", count = count,data = data)
+
 @app.route('/pullfromgithub',methods=['POST'])
 def pull():
     cmd = subprocess.Popen("git pull", shell=True, cwd='/data/freelancing-ayana/',)

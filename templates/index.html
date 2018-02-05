@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="user-scalable=no, initial-scale=1.0, maximum-scale=1.0, width=device-width">
+		<meta content="yes" name="apple-mobile-web-app-capable">
+		<meta content="black" name="apple-mobile-web-app-status-bar-style">
+		<meta name="format-detection" content="telephone=no">
+		<meta name="format-detection" content="email=no">
+		<title>阿雅娜H5数据统计</title>
+		<link rel="stylesheet" type="text/css" href="assets/reset.css">
+		<link rel="stylesheet" type="text/css" href="assets/style.css">
+	</head>
+	<body>
+
+		<div class="table_wrap">
+			<h1>阿雅娜H5数据统计</h1>
+			<h2>共有{{count}}条记录</h2>
+			<table>
+				<thead>
+					<tr>
+						<th>IP地址</th>
+						<th>选项</th>
+						<th>类型</th>
+						<th>兴趣</th>
+						<th>姓名</th>
+						<th>邮箱</th>
+						<th>手机号</th>
+						<th>填写日期</th>
+						<th>位置</th>
+						<th>渠道</th>
+					</tr>
+				</thead>
+				<tbody>
+					<colgroup span="1" class="c1" />
+				    <colgroup span="1" class="c2" />
+				    <colgroup span="1" class="c3" />
+				    <colgroup span="1" class="c4" />
+				    <colgroup span="1" class="c5" />
+				    <colgroup span="1" class="c6" />
+				    <colgroup span="1" class="c7" />
+				    <colgroup span="1" class="c8" />
+				    <colgroup span="1" class="c9" />
+				    <colgroup span="1" class="c10" />
+					{% for d in data %}
+					<tr>
+						<td>{{d.[0]}}</td>
+						<td>{{d.[1]}}</td>
+						<td>{{d.[2]}}</td>
+						<td>{{d.[3]}}</td>
+						<td>{{d.[4]}}</td>
+						<td>{{d.[5]}}</td>
+						<td>{{d.[6]}}</td>
+						<td>{{d.[7]}}</td>
+						<td>{{d.[8]}}</td>
+						<td>{{d.[9]}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
+
+	</body>
+</html>
