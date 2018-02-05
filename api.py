@@ -82,6 +82,8 @@ def statistic():
     result = db.query_all(sql)
     data = result[0]
     count = result[1]
+    for d in data:
+        print d[0]
     return render_template("index.html", count = count,data = data)
 
 @app.route('/pullfromgithub',methods=['POST'])
