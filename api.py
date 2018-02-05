@@ -8,6 +8,12 @@
 @file: DBConfig.py
 @time: 30/1/18 01:26
 """
+import sys
+defaultencoding = 'utf-8'
+if sys.getdefaultencoding() != defaultencoding:
+    reload(sys)
+    sys.setdefaultencoding(defaultencoding)
+
 
 from flask import Flask,request,render_template
 import urllib2
