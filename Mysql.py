@@ -75,4 +75,4 @@ class Mysql(object):
             result = self._cursor.fetchall()
         else:
             result = False
-        return result,count
+        return result
