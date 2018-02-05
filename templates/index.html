@@ -8,8 +8,8 @@
 		<meta name="format-detection" content="telephone=no">
 		<meta name="format-detection" content="email=no">
 		<title>阿雅娜H5数据统计</title>
-		<link rel="stylesheet" type="text/css" href="assets/reset.css">
-		<link rel="stylesheet" type="text/css" href="assets/style.css">
+		<link rel="stylesheet" type="text/css" href="statistics/assets/reset.css">
+		<link rel="stylesheet" type="text/css" href="statistics/assets/style.css">
 	</head>
 	<body>
 
@@ -43,16 +43,16 @@
 				    <colgroup span="1" class="c10" />
 					{% for d in data %}
 					<tr>
-						<td>1{{d.ip}}</td>
-						<td>2{{d[1]}}</td>
-						<td>3{{d[2]}}</td>
-						<td>4{{d[3]}}</td>
-						<td>{{d[4]}}</td>
-						<td>{{d[5]}}</td>
-						<td>{{d[6]}}</td>
-						<td>{{d[7]}}</td>
-						<td>{{d[8]}}</td>
-						<td>{{d[9]}}</td>
+						<td>{{d.ip}}</td>
+						<td>{{d.choices}}</td>
+						<td>{{d.user_type}}</td>
+						<td>{{d.user_interest}}</td>
+						<td>{{d.user_name}}</td>
+						<td>{{d.user_email}}</td>
+						<td>{{d.user_phone}}</td>
+						<td>{{d.insert_time}}</td>
+						<td>{{d.city}}</td>
+						<td>{{d.channel}}</td>
 					</tr>
 				    {% endfor %}
 				</tbody>
