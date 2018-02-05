@@ -86,8 +86,9 @@ def log():
 def statistic():
     sql = "select * from records"
     result = db.query_all(sql)
-    data = result
-    return render_template("index.html",data = data)
+    data = result[0]
+    count = result[1]
+    return render_template("index.html",data = data,count= count)
 
 @app.route('/pullfromgithub',methods=['POST'])
 def pull():
